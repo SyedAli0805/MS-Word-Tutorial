@@ -1,5 +1,8 @@
 import javax.swing.JButton;
 import java.awt.Color;
+import javax.swing.Timer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class Table {
     private int number;
@@ -28,8 +31,21 @@ public class Table {
     }
 
     public void endOrder() {
+        markAsPaid(); // Call the new method
+    }
+
+    public void markAsPaid() {
         this.state = "paid";
         updateButtonColor();
+
+        // Reset the table state to "empty" after 2 seconds
+        Timer timer = new Timer(2000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                resetTable();
+            }
+        });
+        timer.setRepeats(false); // Only execute once
+        timer.start();
     }
 
     public void resetTable() {
