@@ -1,116 +1,92 @@
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class NavigationBar extends JMenuBar {
+public class NavigationBar extends JPanel {
     public NavigationBar(Dashboard dashboard) {
-        // Home menu
-        JMenu homeMenu = new JMenu("Home");
-        JMenuItem homeItem = new JMenuItem("Home");
-        homeItem.addActionListener(new ActionListener() {
+        setLayout(new FlowLayout(FlowLayout.LEFT));
+
+        // Home button
+        JButton homeButton = new JButton("Home");
+        homeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dashboard.showPage(new HomePage(dashboard));
             }
         });
-        homeMenu.add(homeItem);
-        add(homeMenu);
+        add(homeButton);
 
-        // Order menu
-        JMenu orderMenu = new JMenu("Order");
-        JMenuItem orderItem = new JMenuItem("Order");
-        orderItem.addActionListener(new ActionListener() {
+        // Order button
+        JButton orderButton = new JButton("Order");
+        orderButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dashboard.showPage(new OrderPage(dashboard));
             }
         });
-        orderMenu.add(orderItem);
-        add(orderMenu);
+        add(orderButton);
 
-        // Products menu
-        JMenu productsMenu = new JMenu("Products");
-        JMenuItem showProductsItem = new JMenuItem("Show All Products");
-        showProductsItem.addActionListener(new ActionListener() {
+        // Products button
+        JButton productsButton = new JButton("Products");
+        productsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dashboard.showPage(new ProductsPage(dashboard, "Show All Products"));
             }
         });
-        productsMenu.add(showProductsItem);
-        JMenuItem addProductItem = new JMenuItem("Add New Product");
-        addProductItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dashboard.showPage(new ProductsPage(dashboard, "Add New Product"));
-            }
-        });
-        productsMenu.add(addProductItem);
-        add(productsMenu);
+        add(productsButton);
 
-        // Raw Material menu
-        JMenu rawMaterialMenu = new JMenu("Raw Material");
-        JMenuItem showRawMaterialItem = new JMenuItem("Show All Raw Material");
-        showRawMaterialItem.addActionListener(new ActionListener() {
+        // Raw Material button
+        JButton rawMaterialButton = new JButton("Raw Material");
+        rawMaterialButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dashboard.showPage(new RawMaterialPage(dashboard, "Show All Raw Material"));
             }
         });
-        rawMaterialMenu.add(showRawMaterialItem);
-        JMenuItem addRawMaterialItem = new JMenuItem("Add New Raw Material");
-        addRawMaterialItem.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dashboard.showPage(new RawMaterialPage(dashboard, "Add New Raw Material"));
-            }
-        });
-        rawMaterialMenu.add(addRawMaterialItem);
-        add(rawMaterialMenu);
+        add(rawMaterialButton);
 
-        // Recipe menu
-        JMenu recipeMenu = new JMenu("Recipe");
-        JMenuItem showRecipesItem = new JMenuItem("Show All Recipes");
-        showRecipesItem.addActionListener(new ActionListener() {
+        // Recipe button
+        JButton recipeButton = new JButton("Recipe");
+        recipeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dashboard.showPage(new RecipePage(dashboard, "Show All Recipes"));
             }
         });
-        recipeMenu.add(showRecipesItem);
-        JMenuItem addRecipeItem = new JMenuItem("Add New Recipe");
-        addRecipeItem.addActionListener(new ActionListener() {
+        add(recipeButton);
+
+        // File button
+        JButton fileButton = new JButton("Reports");
+        fileButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                dashboard.showPage(new RecipePage(dashboard, "Add New Recipe"));
+                // Create a dropdown menu or buttons for different reports
+                JPopupMenu reportMenu = new JPopupMenu();
+
+                JMenuItem orderReport = new JMenuItem("Show Order Report");
+                orderReport.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        dashboard.showPage(new FilePage(dashboard, "Show Order Report"));
+                    }
+                });
+                reportMenu.add(orderReport);
+
+                JMenuItem salesReport = new JMenuItem("Show Sales Report");
+                salesReport.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        dashboard.showPage(new FilePage(dashboard, "Show Sales Report"));
+                    }
+                });
+                reportMenu.add(salesReport);
+
+                JMenuItem formulatedConsumptionReport = new JMenuItem("Show Formulated Consumption Report");
+                formulatedConsumptionReport.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        dashboard.showPage(new FilePage(dashboard, "Show Formulated Consumption Report"));
+                    }
+                });
+                reportMenu.add(formulatedConsumptionReport);
+
+                // Show the dropdown menu below the button
+                reportMenu.show(fileButton, fileButton.getWidth(), fileButton.getHeight());
             }
         });
-        recipeMenu.add(addRecipeItem);
-        add(recipeMenu);
-
-        // File menu
-        JMenu fileMenu = new JMenu("File");
-        JMenuItem orderReport = new JMenuItem("Show Order Report");
-        orderReport.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dashboard.showPage(new FilePage(dashboard, "Show Order Report"));
-            }
-        });
-
-        fileMenu.add(orderReport);
-
-        JMenuItem salesReport = new JMenuItem("Show Sales Report");
-        salesReport.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dashboard.showPage(new FilePage(dashboard,"Show Sales Report"));
-            }
-        });
-
-        fileMenu.add(salesReport);
-
-        JMenuItem formulatedConsumptionReport = new JMenuItem("Show Formulated Consumption Report");
-        formulatedConsumptionReport.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                dashboard.showPage(new FilePage(dashboard,"Show Formulated Consumption Report"));
-            }
-        });
-
-        fileMenu.add(formulatedConsumptionReport);
-
-        add(fileMenu);
+        add(fileButton);
     }
 }

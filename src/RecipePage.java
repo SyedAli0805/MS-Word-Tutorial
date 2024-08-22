@@ -75,8 +75,16 @@ public class RecipePage extends JPanel {
 
             String[] materials = data[1].split(",");
             String[] quantities = data[2].split(",");
-            for (int i = 0; i < materials.length; i++) {
+
+            // Ensure that both materials and quantities arrays have the same length
+            int length = Math.min(materials.length, quantities.length);
+            for (int i = 0; i < length; i++) {
                 materialsModel.addRow(new Object[]{materials[i], quantities[i]});
+            }
+
+            // If the lengths don't match, handle the discrepancy
+            if (materials.length != quantities.length) {
+                JOptionPane.showMessageDialog(this, "Warning: Materials and Quantities length mismatch!", "Warning", JOptionPane.WARNING_MESSAGE);
             }
         }
 
@@ -125,4 +133,5 @@ public class RecipePage extends JPanel {
             }
         }
     }
+
 }
